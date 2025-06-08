@@ -13,45 +13,29 @@ const navigation: NavItem[] = [
   { name: '홈', href: '/' },
   { name: '제품소개', href: '/products' },
   { name: '회사소개', href: '/about' },
-  { name: '문의하기', href: '/contact' }, // CTA도 여기서 처리
+  { name: '문의하기', href: '/contact' },
 ];
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="bg-white shadow-sm sticky top-0 z-50">
-      <nav
-        className="mx-auto flex max-w-7xl items-center justify-between px-4 py-5 lg:px-8"
-        aria-label="Global"
-      >
-        {/* 로고 */}
-        <div className="flex lg:flex-1">
-          <Link href="/" className="text-2xl font-bold text-green-600">
-            녹색마을
-          </Link>
-        </div>
+    <header className="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-gray-200 shadow-sm">
+      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+        {/* Logo */}
+        <Link href="/" className="text-2xl font-extrabold text-green-600 tracking-tight">
+          녹색마을
+        </Link>
 
-        {/* 햄버거 메뉴 */}
-        <div className="flex lg:hidden">
-          <button
-            type="button"
-            onClick={() => setMobileMenuOpen(true)}
-            className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:bg-gray-100 focus:outline-none"
-          >
-            <Bars3Icon className="h-6 w-6" />
-          </button>
-        </div>
-
-        {/* 데스크탑 메뉴 */}
-        <div className="hidden lg:flex lg:gap-x-10">
+        {/* Desktop Menu */}
+        <div className="hidden lg:flex items-center gap-10">
           {navigation.map((item) => (
             <Link
               key={item.name}
               href={item.href}
-              className={`text-sm font-medium transition ${
+              className={`text-sm font-medium transition-all ${
                 item.name === '문의하기'
-                  ? 'bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700'
+                  ? 'bg-green-600 text-white px-5 py-2 rounded-full shadow-md hover:bg-green-700'
                   : 'text-gray-700 hover:text-green-600'
               }`}
             >
@@ -59,32 +43,41 @@ export default function Header() {
             </Link>
           ))}
         </div>
+
+        {/* Mobile Hamburger */}
+        <div className="lg:hidden">
+          <button
+            onClick={() => setMobileMenuOpen(true)}
+            className="p-2 rounded-md text-gray-700 hover:bg-gray-100 focus:outline-none"
+          >
+            <Bars3Icon className="h-6 w-6" />
+          </button>
+        </div>
       </nav>
 
-      {/* 모바일 메뉴 */}
+      {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden fixed inset-0 bg-white z-50 p-6 overflow-y-auto">
-          <div className="flex items-center justify-between">
+        <div className="lg:hidden fixed inset-0 z-50 bg-white p-6 shadow-xl animate-fadeIn">
+          <div className="flex items-center justify-between mb-8">
             <Link href="/" className="text-2xl font-bold text-green-600">
               녹색마을
             </Link>
             <button
-              type="button"
               onClick={() => setMobileMenuOpen(false)}
-              className="p-2 text-gray-700 hover:bg-gray-100 rounded-md"
+              className="p-2 rounded-md text-gray-700 hover:bg-gray-100"
             >
               <XMarkIcon className="h-6 w-6" />
             </button>
           </div>
-          <div className="mt-8 space-y-4">
+          <div className="space-y-4">
             {navigation.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className={`block px-4 py-3 rounded-md text-base font-medium ${
+                className={`block w-full text-center px-4 py-3 rounded-lg text-base font-medium transition ${
                   item.name === '문의하기'
-                    ? 'bg-green-600 text-white text-center hover:bg-green-700'
+                    ? 'bg-green-600 text-white hover:bg-green-700'
                     : 'text-gray-800 hover:bg-gray-100'
                 }`}
               >
