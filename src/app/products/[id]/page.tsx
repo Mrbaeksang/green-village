@@ -7,7 +7,13 @@ interface Params {
   id: string;
 }
 
-export default function ProductDetailPage({ params }: { params: Params }) {
+interface PageProps {
+  params: {
+    id: string;
+  };
+}
+
+export default function ProductDetailPage({ params }: PageProps) {
   const product = products.find((p) => String(p.id) === params.id);
 
   if (!product) {
