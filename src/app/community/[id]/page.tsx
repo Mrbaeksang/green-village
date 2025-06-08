@@ -4,13 +4,11 @@ import { notFound } from "next/navigation";
 import { communityPosts } from "@/data/community";
 import ReactMarkdown from "react-markdown";
 
-type CommunityDetailPageProps = {
-  params: {
-    id: string;
-  };
-};
+interface PageProps {
+  params: { id: string };
+}
 
-export default async function CommunityDetailPage({ params }: CommunityDetailPageProps) {
+export default async function CommunityDetailPage({ params }: PageProps) {
   const post = communityPosts.find((p) => String(p.id) === params.id);
   if (!post) return notFound();
 
@@ -18,7 +16,6 @@ export default async function CommunityDetailPage({ params }: CommunityDetailPag
     <main className="max-w-4xl mx-auto px-6 py-16">
       <h1 className="text-3xl font-bold text-gray-900 mb-4">{post.title}</h1>
       <p className="text-sm text-gray-500 mb-8">{post.date}</p>
-
       <div className="prose prose-green max-w-none">
         <ReactMarkdown>{post.content}</ReactMarkdown>
       </div>
@@ -26,7 +23,7 @@ export default async function CommunityDetailPage({ params }: CommunityDetailPag
   );
 }
 
-export async function generateStaticParams(): Promise<Array<{ id: string }>> {
+export async function generateStaticParams() {
   return communityPosts.map((post) => ({
     id: post.id.toString(),
   }));
