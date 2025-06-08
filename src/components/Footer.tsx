@@ -14,16 +14,16 @@ export default function Footer() {
               <div className="mt-4 space-y-2">
                 <div className="flex items-center">
                   <FaPhone className="h-4 w-4 text-green-400 mr-2" />
-                  <span className="text-sm text-gray-300">02-123-4567</span>
+                  <span className="text-sm text-gray-300">010-3487-3490</span>
                 </div>
                 <div className="flex items-center">
                   <FaEnvelope className="h-4 w-4 text-green-400 mr-2" />
-                  <span className="text-sm text-gray-300">contact@greenvillage.com</span>
+                  <span className="text-sm text-gray-300">전상언@naver.com</span>
                 </div>
                 <div className="flex items-start">
                   <FaMapMarkerAlt className="h-4 w-4 text-green-400 mt-1 mr-2 flex-shrink-0" />
                   <span className="text-sm text-gray-300">
-                    서울특별시 강남구 테헤란로 123, 그린빌딩 10층
+                    경상남도 진주시 나불로21번길 73
                   </span>
                 </div>
               </div>
@@ -37,16 +37,6 @@ export default function Footer() {
                     회사소개
                   </Link>
                 </li>
-                <li>
-                  <Link href="/privacy" className="text-sm leading-6 text-gray-300 hover:text-white">
-                    개인정보처리방침
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/terms" className="text-sm leading-6 text-gray-300 hover:text-white">
-                    이용약관
-                  </Link>
-                </li>
               </ul>
             </div>
 
@@ -54,18 +44,8 @@ export default function Footer() {
               <h3 className="text-sm font-semibold leading-6">고객지원</h3>
               <ul role="list" className="mt-4 space-y-2">
                 <li>
-                  <Link href="/faq" className="text-sm leading-6 text-gray-300 hover:text-white">
-                    자주 묻는 질문
-                  </Link>
-                </li>
-                <li>
                   <Link href="/contact" className="text-sm leading-6 text-gray-300 hover:text-white">
                     1:1 문의
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/notice" className="text-sm leading-6 text-gray-300 hover:text-white">
-                    공지사항
                   </Link>
                 </li>
               </ul>

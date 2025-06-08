@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import HistorySection from '@/components/HistorySection';
+import StorePosts from '@/components/StorePosts';
 
 export default function AboutPage() {
   return (
@@ -33,6 +34,9 @@ export default function AboutPage() {
             </div>
           </div>
         </div>
+
+        {/* Store Posts */}
+        <StorePosts />
 
         {/* History Section */}
         <div className="mb-24">

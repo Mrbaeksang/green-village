@@ -2,6 +2,7 @@
 module.exports = {
   content: [
     "./src/**/*.{js,ts,jsx,tsx,mdx}",
+    "./app/**/*.{js,ts,jsx,tsx,mdx}", // App Router 경로도 명시
   ],
   theme: {
     extend: {
@@ -24,7 +25,9 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/typography'), // ✅ 여기에 추가!
+  ],
   darkMode: 'class',
   corePlugins: {
     preflight: true,
