@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { products } from '@/types/product';
+import { products } from '@/data/products';
 import ProductCard from '@/components/ProductCard';
 
 export default function ProductsPage() {

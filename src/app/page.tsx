@@ -1,10 +1,14 @@
-// src/app/page.tsx
+
+"use client";
+
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ProductCard from "@/components/ProductCard";
-import { products } from "@/types/product";
+import { products } from "@/data/products";
+import { communityPosts } from "@/data/community";
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
 
 const features = [
@@ -26,11 +30,14 @@ const features = [
 ];
 
 export default function Home() {
+  const [visibleCount, setVisibleCount] = useState(2);
+  const showMore = () => setVisibleCount((prev) => prev + 2);
+
   return (
     <>
       <Header />
 
-      {/* Hero 섹션 */}
+      {/* Hero */}
       <section className="relative bg-gradient-to-r from-green-50 to-white overflow-hidden">
         <div className="relative max-w-7xl mx-auto flex flex-col lg:flex-row items-center py-20 px-6 lg:px-0">
           <div className="z-10 lg:w-1/2 space-y-6">
@@ -61,7 +68,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 기능 섹션 */}
+      {/* 기능 */}
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-12 space-y-2">
@@ -83,14 +90,12 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 인기 제품 섹션 */}
+      {/* 제품 */}
       <section className="bg-gray-50 py-16">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-12 space-y-2">
             <h2 className="text-3xl font-bold text-gray-900">인기 제품</h2>
-            <p className="text-lg text-gray-600">
-              녹색마을의 베스트셀러 제품을 확인하세요.
-            </p>
+            <p className="text-lg text-gray-600">녹색마을의 베스트셀러 제품을 확인하세요.</p>
           </div>
           <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-8">
             {products.map((p) => (
@@ -108,6 +113,46 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+{/* 녹색마을 이야기 */}
+<section className="bg-white py-16">
+  <div className="max-w-4xl mx-auto px-6">
+    <div className="text-center mb-12 space-y-2">
+      <h2 className="text-3xl font-bold text-gray-900">녹색마을 이야기</h2>
+      <p className="text-lg text-gray-600">다양한 활동과 소식을 전합니다.</p>
+    </div>
+
+    <div className="space-y-12">
+      {communityPosts.slice(0, 2).map((post) => (
+        <article key={post.id} className="border-b border-gray-200 pb-8">
+          <h3 className="text-2xl font-bold text-green-800 hover:underline">
+            <Link href={`/community/${post.id}`}>{post.title}</Link>
+          </h3>
+          <p className="text-sm text-gray-500 mt-1">{post.date}</p>
+          <p className="text-gray-700 mt-4 line-clamp-4">{post.content}</p>
+          <div className="mt-4">
+            <Link
+              href={`/community/${post.id}`}
+              className="text-green-600 text-sm font-medium hover:underline"
+            >
+              전체 글 보기 →
+            </Link>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <div className="mt-12 flex justify-center">
+      <Link
+        href="/community"
+        className="px-6 py-3 bg-green-600 text-white rounded-lg font-medium shadow hover:bg-green-700 transition"
+      >
+        전체 이야기 보기
+      </Link>
+    </div>
+  </div>
+</section>
+
 
       <Footer />
     </>

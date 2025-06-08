@@ -1,6 +1,6 @@
 // src/app/products/[id]/page.tsx
 import { notFound } from 'next/navigation';
-import { products } from '@/types/product';
+import { products } from '@/data/products';
 import ProductDetail from '@/components/ProductDetail';
 
 export default async function ProductDetailPage({

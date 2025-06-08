@@ -1,15 +1,15 @@
-// components/Header.tsx
 'use client';
 
 import Link from 'next/link';
 import { useState } from 'react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 
-type NavItem = { name: string; href: string; };
+type NavItem = { name: string; href: string };
 const navigation: NavItem[] = [
   { name: '홈', href: '/' },
   { name: '제품소개', href: '/products' },
   { name: '회사소개', href: '/about' },
+  { name: '녹색마을 이야기', href: '/community' }, // ✅ 추가됨
   { name: '문의하기', href: '/contact' },
 ];
 
