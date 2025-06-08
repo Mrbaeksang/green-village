@@ -1,5 +1,4 @@
 // src/app/page.tsx
-
 import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/Header";
@@ -28,34 +27,32 @@ const features = [
 
 export default function Home() {
   return (
-    <div className="min-h-screen flex flex-col">
+    <>
       <Header />
 
-      {/* Hero Section */}
-      <section className="relative bg-white overflow-hidden">
-        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center">
-          <div className="z-10 py-16 px-6 lg:w-1/2">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-gray-900">
+      {/* Hero 섹션 */}
+      <section className="relative bg-gradient-to-r from-green-50 to-white overflow-hidden">
+        <div className="relative max-w-7xl mx-auto flex flex-col lg:flex-row items-center py-20 px-6 lg:px-0">
+          <div className="z-10 lg:w-1/2 space-y-6">
+            <h1 className="text-5xl lg:text-6xl font-extrabold text-gray-900">
               <span className="block">미래 농업을 위한</span>
               <span className="block text-green-600">스마트한 선택</span>
             </h1>
-            <p className="mt-4 text-lg text-gray-600">
-              녹색마을은 농업용 드론 및 부품의 선두 기업으로, 첨단 기술을 바탕으로 한 효율적이고 지속 가능한 농업 솔루션을 제공합니다.
+            <p className="text-lg text-gray-700 max-w-lg leading-relaxed">
+              녹색마을은 농업용 드론 및 부품의 전문 기업입니다. 첨단 기술로 더 안전하고 효율적인 농업 솔루션을 제공합니다.
             </p>
-            <div className="mt-6">
-              <Link
-                href="/products"
-                className="inline-block px-8 py-3 bg-green-600 text-white rounded-md hover:bg-green-700 text-base font-medium"
-              >
-                제품 보기
-              </Link>
-            </div>
+            <Link
+              href="/products"
+              className="inline-flex items-center px-8 py-4 bg-green-600 text-white rounded-xl text-lg font-medium shadow-lg hover:bg-green-700 transition"
+            >
+              제품 보기
+              <ArrowRightIcon className="ml-2 w-6 h-6" />
+            </Link>
           </div>
-
-          <div className="relative lg:w-1/2 h-96 sm:h-[500px] w-full">
+          <div className="relative lg:w-1/2 w-full h-80 sm:h-96 md:h-[500px] mt-12 lg:mt-0">
             <Image
               src="/images/녹색마을_배너.png"
-              alt="녹색마을 배너 이미지"
+              alt="녹색마을 배너"
               fill
               className="object-contain"
               priority
@@ -64,72 +61,55 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Features Section */}
+      {/* 기능 섹션 */}
       <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="text-center">
-            <h2 className="text-green-600 font-semibold tracking-wide uppercase text-sm">기능</h2>
-            <p className="mt-2 text-3xl font-bold text-gray-900">더 나은 농업을 위한 혁신적인 솔루션</p>
-            <p className="mt-4 text-lg text-gray-600">
-              녹색마을은 최신 기술을 활용하여 농업의 미래를 열어갑니다.
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-12 space-y-2">
+            <h2 className="text-green-600 font-medium uppercase tracking-wide">기능</h2>
+            <h3 className="text-3xl font-bold text-gray-900">농업을 혁신하는 솔루션</h3>
+            <p className="text-gray-600 leading-relaxed">
+              녹색마을은 최신 기술 기반 농업 혁신을 실현합니다.
             </p>
           </div>
-          <div className="mt-12 grid md:grid-cols-3 gap-8">
-            {features.map((feature) => (
-              <div key={feature.name} className="flex items-start space-x-4">
-                <div className="text-3xl">{feature.icon}</div>
-                <div>
-                  <h3 className="text-lg font-medium text-gray-900">{feature.name}</h3>
-                  <p className="mt-2 text-sm text-gray-600">{feature.description}</p>
-                </div>
+          <div className="grid md:grid-cols-3 gap-8">
+            {features.map((f) => (
+              <div key={f.name} className="flex flex-col items-center text-center space-y-4 p-6 border border-gray-100 rounded-xl hover:shadow-lg transition">
+                <div className="text-4xl">{f.icon}</div>
+                <h4 className="text-xl font-semibold text-gray-900">{f.name}</h4>
+                <p className="text-gray-600">{f.description}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Featured Products Section */}
+      {/* 인기 제품 섹션 */}
       <section className="bg-gray-50 py-16">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="text-center mb-12">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-12 space-y-2">
             <h2 className="text-3xl font-bold text-gray-900">인기 제품</h2>
-            <p className="mt-4 text-lg text-gray-600">녹색마을의 베스트셀러 제품들을 만나보세요</p>
+            <p className="text-lg text-gray-600">
+              녹색마을의 베스트셀러 제품을 확인하세요.
+            </p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {products.map((product) => (
-              <ProductCard key={product.id} product={product} />
+          <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-8">
+            {products.map((p) => (
+              <ProductCard key={p.id} product={p} />
             ))}
           </div>
-          <div className="mt-10 text-center">
+          <div className="mt-12 flex justify-center">
             <Link
               href="/products"
-              className="inline-flex items-center px-6 py-3 bg-green-600 text-white rounded-md hover:bg-green-700 text-base font-medium"
+              className="inline-flex items-center px-8 py-3 bg-green-600 text-white rounded-lg font-medium shadow hover:bg-green-700 transition"
             >
-              모든 제품 보기
-              <ArrowRightIcon className="ml-2 h-5 w-5" />
+              더 많은 제품 보기
+              <ArrowRightIcon className="ml-2 w-5 h-5" />
             </Link>
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="bg-green-700">
-        <div className="max-w-2xl mx-auto text-center py-20 px-4">
-          <h2 className="text-3xl font-bold text-white">농업의 미래를 함께 만들어가요</h2>
-          <p className="mt-4 text-lg text-green-200">
-            녹색마을과 함께라면 더 스마트하고 효율적인 농업이 가능합니다.
-            지금 바로 문의하세요!
-          </p>
-          <Link
-            href="/contact"
-            className="mt-8 inline-block px-5 py-3 bg-white text-green-700 font-medium rounded-md hover:bg-green-50"
-          >
-            무료 상담 신청하기
-          </Link>
-        </div>
-      </section>
-
       <Footer />
-    </div>
+    </>
   );
 }

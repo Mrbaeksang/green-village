@@ -2,8 +2,11 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
+// Heroicons are great for icons, but since we're aiming for a very clean look,
+// and the current design doesn't explicitly use them, we can remove if not needed for future features.
+// import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
 
+// Post 타입을 정의합니다. 각 지점 소식의 데이터 구조를 나타냅니다.
 type Post = {
   id: number;
   title: string;
@@ -13,6 +16,7 @@ type Post = {
   locationName: string;
 };
 
+// 지점 소식 데이터를 배열로 정의합니다.
 const posts: Post[] = [
   {
     id: 1,
@@ -94,6 +98,7 @@ const posts: Post[] = [
   }
 ];
 
+// 회사 연혁 데이터를 배열로 정의합니다.
 const historyData = [
   {
     year: '2014',
@@ -123,110 +128,134 @@ const historyData = [
 ];
 
 export default function AboutPage() {
+  // 모달에 표시될 선택된 게시물 상태를 관리합니다.
   const [selectedPost, setSelectedPost] = useState<Post | null>(null);
 
+  // 이스케이프 키를 눌러 모달을 닫는 기능을 추가합니다.
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') setSelectedPost(null);
     };
     document.addEventListener('keydown', handleKeyDown);
+    // 컴포넌트 언마운트 시 이벤트 리스너를 제거하여 메모리 누수를 방지합니다.
     return () => document.removeEventListener('keydown', handleKeyDown);
-  }, []);
+  }, []); // 빈 배열은 컴포넌트가 처음 렌더링될 때 한 번만 실행됨을 의미합니다.
 
   return (
-    <div className="min-h-screen bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    // 전체 페이지 컨테이너: 최소 높이를 화면 전체로 설정하고, 배경색을 부드러운 회색으로 변경합니다.
+    <div className="min-h-screen bg-gray-50 py-20">
+      {/* 최대 너비와 가운데 정렬을 위한 컨테이너. 패딩을 추가하여 내용이 가장자리에 붙지 않도록 합니다. */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        {/* Hero Section */}
-        <div className="text-center mb-24">
-          <h1 className="text-5xl font-bold mb-6">회사소개</h1>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+        {/* Hero Section (회사 소개 제목 및 설명) */}
+        <header className="text-center mb-24">
+          {/* 메인 제목: 더 크고, 굵고, 추적 간격을 조정하여 가독성을 높입니다. */}
+          <h1 className="text-5xl font-extrabold text-gray-900 mb-4 tracking-tight">회사소개</h1>
+          {/* 서브 텍스트: 회색 톤으로 부드러움을 더하고, 최대 너비를 제한하여 읽기 쉽게 합니다. */}
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             녹색마을은 농업 드론 전문 기업으로, 혁신적인 기술로 농업의 미래를 선도합니다.
           </p>
-        </div>
+        </header>
 
-        {/* Vision & Mission */}
-        <div className="mb-24">
-          <h2 className="text-4xl font-bold mb-12 text-center">비전 & 미션</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-            <div className="p-8 bg-white rounded-xl shadow-sm">
-              <h3 className="text-3xl font-semibold mb-6">비전</h3>
-              <p className="text-lg text-gray-600 leading-relaxed">
-                첨단 드론 기술을 활용하여 농업의 생산성과 효율성을 극대화하고,
-                지속 가능한 농업 발전을 선도합니다.
-              </p>
-            </div>
-            <div className="p-8 bg-white rounded-xl shadow-sm">
-              <h3 className="text-3xl font-semibold mb-6">미션</h3>
-              <p className="text-lg text-gray-600 leading-relaxed">
-                혁신적인 드론 솔루션으로 농업의 디지털화를 실현하고,
-                농업인의 삶의 질 향상에 기여합니다.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Store Posts */}
-        <div className="py-16 bg-white">
-          <h2 className="text-4xl font-bold mb-12 text-center">지점 안내</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {/* Store Posts (지점 안내) 섹션 */}
+        <section className="py-16"> {/* 상하 패딩 유지 */}
+          {/* 지점 안내 제목: 더 크고 굵게, 중앙 정렬합니다. */}
+          <h2 className="text-4xl font-bold mb-12 text-center text-gray-900">지점 안내</h2>
+          {/* 지점 카드 그리드: 반응형으로 1, 2, 3열로 변경되며, 간격을 넓혀 시각적 여백을 줍니다. */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
             {posts.map((post) => (
+              // 각 게시물 카드: 배경을 흰색으로, 모서리를 둥글게, 그림자를 추가합니다.
+              // 호버 시 그림자와 테두리 효과를 주어 클릭 가능함을 명확히 합니다.
               <div
                 key={post.id}
-                className="bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-xl transition-shadow duration-300 cursor-pointer hover:ring-2 hover:ring-green-500"
-                onClick={() => setSelectedPost(post)}
+                className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 cursor-pointer border border-transparent hover:border-green-500"
+                onClick={() => setSelectedPost(post)} // 클릭 시 모달 열기
               >
-                <div className="h-48 relative">
-                  <Image src={post.images[0]} alt={post.title} fill className="object-cover" />
+                {/* 이미지 컨테이너: 고정된 높이와 이미지 채우기 속성을 사용합니다. */}
+                <div className="h-56 relative w-full"> {/* 이미지 높이를 조금 더 늘려 시원한 느낌 */}
+                  <Image
+                    src={post.images[0]}
+                    alt={post.title}
+                    fill // 부모 컨테이너를 채우도록 설정
+                    className="object-cover" // 이미지 비율 유지하며 컨테이너에 맞게 자르기
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" // 반응형 이미지 사이즈 최적화
+                  />
                 </div>
+                {/* 텍스트 내용 부분 */}
                 <div className="p-6">
-                  <h3 className="text-xl font-bold mb-2">{post.title}</h3>
-                  <div className="text-gray-600 mb-4 line-clamp-4">
+                  {/* 제목: 더 굵고 깔끔하게. */}
+                  <h3 className="text-2xl font-semibold text-gray-900 mb-3">{post.title}</h3>
+                  {/* 내용: 회색 톤으로, 최대 4줄까지 보여주고 넘치면 ... 처리합니다. */}
+                  <div className="text-gray-700 text-base mb-4 line-clamp-4 leading-relaxed">
+                    {/* 줄바꿈을 <p> 태그로 처리하여 HTML에서 정확하게 표시되도록 합니다. */}
                     {post.content.split('\n').map((line, i) => (
-                      <p key={i} className="mb-2">{line}</p>
+                      <p key={i} className="mb-1">{line}</p>
                     ))}
                   </div>
-                  <div className="mt-4">
-                    <p className="text-sm font-medium text-gray-500">📍 {post.locationName}</p>
-                    <p className="text-sm text-gray-500">{post.location}</p>
+                  {/* 위치 정보: 작은 글씨와 연한 회색 톤으로 보조 정보임을 나타냅니다. */}
+                  <div className="mt-5 text-sm text-gray-500">
+                    <p className="font-medium">📍 {post.locationName}</p>
+                    <p>{post.location}</p>
                   </div>
                 </div>
               </div>
             ))}
           </div>
-        </div>
+        </section>
 
-        {/* Post Modal */}
-        {selectedPost && (
+        {/* Post Modal (게시물 상세 모달) */}
+        {selectedPost && ( // selectedPost가 있을 때만 모달을 렌더링합니다.
           <div
-            className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4"
-            onClick={() => setSelectedPost(null)}
+            className="fixed inset-0 bg-black bg-opacity-60 z-50 flex items-center justify-center p-4 backdrop-blur-sm" // 배경을 더 어둡고 약간 블러 처리
+            onClick={() => setSelectedPost(null)} // 모달 외부 클릭 시 닫기
           >
+            {/* 모달 내부 컨테이너: 흰색 배경, 둥근 모서리, 큰 그림자, 최대 너비 및 높이 제한 */}
             <div
-              className="bg-white max-w-4xl w-full p-6 rounded-lg shadow-lg overflow-y-auto max-h-[90vh]"
-              onClick={(e) => e.stopPropagation()}
+              className="bg-white max-w-5xl w-full p-8 rounded-xl shadow-2xl overflow-y-auto max-h-[95vh] relative" // 패딩을 더 주고, 그림자를 강화
+              onClick={(e) => e.stopPropagation()} // 모달 내부 클릭 시 모달이 닫히지 않도록 이벤트 전파 중지
             >
-              <h2 className="text-2xl font-bold mb-4">{selectedPost.title}</h2>
-              <div className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* 닫기 버튼 (X 아이콘) - 모달 우측 상단에 배치 */}
+              <button
+                className="absolute top-4 right-4 text-gray-400 hover:text-gray-700 transition-colors"
+                onClick={() => setSelectedPost(null)}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-8 h-8">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+
+              {/* 모달 제목 */}
+              <h2 className="text-3xl font-bold text-gray-900 mb-6 pr-10">{selectedPost.title}</h2>
+              <div className="space-y-8"> {/* 섹션 간 간격 증가 */}
+                {/* 이미지 갤러리 그리드 */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"> {/* 그리드 간격과 컬럼 조정 */}
                   {selectedPost.images.map((img, i) => (
-                    <div key={i} className="relative w-full h-64 rounded-lg overflow-hidden">
-                      <Image src={img} alt={`${selectedPost.title} 이미지 ${i + 1}`} fill className="object-cover" />
+                    <div key={i} className="relative w-full h-56 rounded-lg overflow-hidden shadow-sm">
+                      <Image
+                        src={img}
+                        alt={`${selectedPost.title} 이미지 ${i + 1}`}
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      />
                     </div>
                   ))}
                 </div>
-                <div className="text-gray-800 whitespace-pre-line text-lg leading-relaxed">
+                {/* 게시물 내용 */}
+                <div className="text-gray-800 whitespace-pre-line text-lg leading-relaxed bg-gray-50 p-6 rounded-lg"> {/* 배경색과 패딩 추가 */}
                   {selectedPost.content}
                 </div>
-                <div className="text-gray-600 mt-4 p-4 bg-gray-50 rounded-lg">
-                  <p className="font-medium">📍 {selectedPost.locationName}</p>
-                  <p className="text-sm">{selectedPost.location}</p>
+                {/* 위치 정보 박스 */}
+                <div className="text-gray-600 p-5 bg-blue-50 rounded-lg border border-blue-100"> {/* 색상 변경 및 테두리 추가 */}
+                  <p className="font-semibold text-blue-700 mb-1">📍 {selectedPost.locationName}</p>
+                  <p className="text-base text-blue-600">{selectedPost.location}</p>
                 </div>
               </div>
-              <div className="mt-6 flex justify-end">
+              {/* 모달 닫기 버튼 */}
+              <div className="mt-8 flex justify-center"> {/* 버튼을 가운데로 정렬 */}
                 <button
                   onClick={() => setSelectedPost(null)}
-                  className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+                  className="px-10 py-3 bg-green-600 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 transition-colors text-lg" // 버튼 크기 및 폰트 변경
                 >
                   닫기
                 </button>
@@ -235,69 +264,78 @@ export default function AboutPage() {
           </div>
         )}
 
-        {/* History Section */}
-        <div className="mb-24 mt-24">
-          <h2 className="text-4xl font-bold mb-12 text-center">회사 연혁</h2>
-          <div className="relative border-l-4 border-blue-500 pl-10">
+        {/* History Section (회사 연혁) */}
+        <section className="mb-24 mt-24"> {/* 상하 마진 유지 */}
+          {/* 회사 연혁 제목 */}
+          <h2 className="text-4xl font-bold mb-12 text-center text-gray-900">회사 연혁</h2>
+          {/* 연혁 타임라인 컨테이너 */}
+          <div className="relative border-l-4 border-green-500 pl-10"> {/* 연혁 라인 색상을 초록색으로 변경 */}
             {historyData.map((item, index) => (
               <div key={index} className="mb-16 relative">
-                <div className="absolute -left-14 top-0 w-20 text-center">
-                  <div className="bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-semibold shadow-md">
+                {/* 연도 표시: 타임라인 왼쪽에 위치하며, 배경색과 폰트 스타일을 조정합니다. */}
+                <div className="absolute -left-16 top-0 w-24 text-center"> {/* 왼쪽 마진과 너비 조정 */}
+                  <div className="bg-green-500 text-white px-4 py-2 rounded-full text-base font-bold shadow-md transform -translate-x-1/2"> {/* 배경색 변경, 폰트 및 위치 조정 */}
                     {item.year}
                   </div>
                 </div>
-                <div className="bg-gray-50 rounded-xl p-6 shadow-md ml-6">
+                {/* 연혁 내용 박스: 흰색 배경, 둥근 모서리, 그림자, 패딩을 적용합니다. */}
+                <div className="bg-white rounded-xl p-7 shadow-lg ml-6 border border-gray-100"> {/* 배경색 흰색, 패딩 및 그림자 강화, 테두리 추가 */}
+                  {/* 연혁 항목 리스트 */}
                   {[...(item.topItems || []), ...(item.bottomItems || [])].map((text, idx) => (
-                    <div key={idx} className="flex items-start gap-2 text-gray-900 mb-2">
-                      <span className="text-blue-500 mt-1">•</span>
-                      <span className="leading-relaxed">{text}</span>
+                    <div key={idx} className="flex items-start gap-3 text-gray-800 mb-2"> {/* 간격 조정, 텍스트 색상 변경 */}
+                      <span className="text-green-600 text-lg mt-1">•</span> {/* 불릿 색상을 초록색으로 변경 */}
+                      <span className="leading-relaxed text-base">{text}</span>
                     </div>
                   ))}
                 </div>
               </div>
             ))}
           </div>
-        </div>
+        </section>
 
-        {/* Contact Info */}
-        <div className="bg-gray-50 p-12 rounded-2xl mt-16">
-          <h2 className="text-3xl font-bold mb-8 text-center">연락처 정보</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="p-6 bg-white rounded-lg shadow-sm">
-              <h3 className="text-xl font-semibold mb-4">문의처</h3>
-              <div className="space-y-3">
+        {/* Contact Info (연락처 정보) 섹션 */}
+        <section className="bg-gray-100 p-12 rounded-2xl mt-20 shadow-inner"> {/* 배경색을 약간 더 진한 회색으로, 그림자 추가 */}
+          {/* 연락처 정보 제목 */}
+          <h2 className="text-4xl font-bold mb-10 text-center text-gray-900">연락처 정보</h2>
+          {/* 연락처 및 영업시간 그리드 */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10"> {/* 간격 증가 */}
+            {/* 문의처 카드 */}
+            <div className="p-8 bg-white rounded-xl shadow-lg border border-gray-100"> {/* 패딩, 배경, 그림자 강화, 테두리 추가 */}
+              <h3 className="text-2xl font-bold text-gray-900 mb-5">문의처</h3>
+              <div className="space-y-4 text-lg"> {/* 텍스트 크기 증가 */}
                 <div className="flex items-center">
-                  <span className="w-16">전화</span>
-                  <span className="text-blue-500">010 3487 3490</span>
+                  <span className="min-w-[80px] font-medium text-gray-700">전화</span> {/* 너비 조정 */}
+                  <span className="text-blue-600 font-semibold">010 3487 3490</span> {/* 색상 및 굵기 조정 */}
                 </div>
                 <div className="flex items-center">
-                  <span className="w-16">이메일</span>
-                  <span className="text-blue-500">전상언@naver.com</span>
+                  <span className="min-w-[80px] font-medium text-gray-700">이메일</span>
+                  <span className="text-blue-600 font-semibold">jsu3001@naver.com</span>
                 </div>
                 <div className="flex items-start">
-                  <span className="w-16">주소</span>
-                  <span className="text-gray-600">
+                  <span className="min-w-[80px] font-medium text-gray-700 mt-1">주소</span>
+                  <span className="text-gray-700 leading-relaxed">
                     경상남도 진주시 나불로21번길 73 <br />
-                    or 경상남도 진주시 이현동 1003
+                    (이현동 1003)
                   </span>
                 </div>
               </div>
             </div>
-            <div className="p-6 bg-white rounded-lg shadow-sm">
-              <h3 className="text-xl font-semibold mb-4">영업시간</h3>
-              <div className="space-y-3">
+            {/* 영업시간 카드 */}
+            <div className="p-8 bg-white rounded-xl shadow-lg border border-gray-100"> {/* 패딩, 배경, 그림자 강화, 테두리 추가 */}
+              <h3 className="text-2xl font-bold text-gray-900 mb-5">영업시간</h3>
+              <div className="space-y-4 text-lg"> {/* 텍스트 크기 증가 */}
                 <div className="flex items-center">
-                  <span className="w-16">평일</span>
-                  <span className="text-gray-600">09:00 - 18:00</span>
+                  <span className="min-w-[80px] font-medium text-gray-700">평일</span>
+                  <span className="text-gray-700 font-semibold">09:00 - 18:00</span>
                 </div>
                 <div className="flex items-center">
-                  <span className="w-16">주말</span>
-                  <span className="text-gray-600">휴무</span>
+                  <span className="min-w-[80px] font-medium text-gray-700">주말</span>
+                  <span className="text-gray-700 font-semibold">휴무</span>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </section>
 
       </div>
     </div>

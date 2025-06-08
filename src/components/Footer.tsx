@@ -6,60 +6,51 @@ export default function Footer() {
 
   return (
     <footer className="bg-gray-900 text-white">
-      <div className="mx-auto max-w-7xl px-6 py-12 md:flex md:items-center md:justify-between lg:px-8">
-        <div className="flex justify-center space-x-6 md:order-2">
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-            <div>
-              <h3 className="text-sm font-semibold leading-6">고객센터</h3>
-              <div className="mt-4 space-y-2">
-                <div className="flex items-center">
-                  <FaPhone className="h-4 w-4 text-green-400 mr-2" />
-                  <span className="text-sm text-gray-300">010-3487-3490</span>
-                </div>
-                <div className="flex items-center">
-                  <FaEnvelope className="h-4 w-4 text-green-400 mr-2" />
-                  <span className="text-sm text-gray-300">전상언@naver.com</span>
-                </div>
-                <div className="flex items-start">
-                  <FaMapMarkerAlt className="h-4 w-4 text-green-400 mt-1 mr-2 flex-shrink-0" />
-                  <span className="text-sm text-gray-300">
-                    경상남도 진주시 나불로21번길 73
-                  </span>
-                </div>
-              </div>
+      <div className="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-3 gap-10">
+        {/* 고객센터 */}
+        <div>
+          <h3 className="text-base font-semibold mb-4">고객센터</h3>
+          <div className="space-y-3 text-sm text-gray-300">
+            <div className="flex items-center">
+              <FaPhone className="text-green-400 mr-2" />
+              <span>010-3487-3490</span>
             </div>
-
-            <div>
-              <h3 className="text-sm font-semibold leading-6">회사정보</h3>
-              <ul role="list" className="mt-4 space-y-2">
-                <li>
-                  <Link href="/about" className="text-sm leading-6 text-gray-300 hover:text-white">
-                    회사소개
-                  </Link>
-                </li>
-              </ul>
+            <div className="flex items-center">
+              <FaEnvelope className="text-green-400 mr-2" />
+              <span>jsu3001@naver.com</span>
             </div>
-
-            <div>
-              <h3 className="text-sm font-semibold leading-6">고객지원</h3>
-              <ul role="list" className="mt-4 space-y-2">
-                <li>
-                  <Link href="/contact" className="text-sm leading-6 text-gray-300 hover:text-white">
-                    1:1 문의
-                  </Link>
-                </li>
-              </ul>
+            <div className="flex items-start">
+              <FaMapMarkerAlt className="text-green-400 mt-1 mr-2" />
+              <span>경상남도 진주시 나불로21번길 73</span>
             </div>
           </div>
         </div>
+
+        {/* 회사정보 */}
+        <div>
+          <h3 className="text-base font-semibold mb-4">회사정보</h3>
+          <ul className="space-y-2 text-sm text-gray-300">
+            <li>
+              <Link href="/about" className="hover:text-white transition-colors">회사소개</Link>
+            </li>
+          </ul>
+        </div>
+
+        {/* 고객지원 */}
+        <div>
+          <h3 className="text-base font-semibold mb-4">고객지원</h3>
+          <ul className="space-y-2 text-sm text-gray-300">
+            <li>
+              <Link href="/contact" className="hover:text-white transition-colors">1:1 문의</Link>
+            </li>
+          </ul>
+        </div>
       </div>
+
+      {/* 하단 바 */}
       <div className="border-t border-gray-800">
-        <div className="mx-auto max-w-7xl px-6 py-6 md:flex md:items-center md:justify-between lg:px-8">
-          <div className="mt-8 md:order-1 md:mt-0">
-            <p className="text-center text-xs leading-5 text-gray-400">
-              &copy; {currentYear} 녹색마을. All rights reserved.
-            </p>
-          </div>
+        <div className="max-w-7xl mx-auto px-6 py-4 text-center text-xs text-gray-400">
+          &copy; {currentYear} 녹색마을. All rights reserved.
         </div>
       </div>
     </footer>
