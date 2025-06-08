@@ -1,14 +1,15 @@
 // src/app/community/[id]/page.tsx
+'use client';
 
 import { notFound } from "next/navigation";
 import { communityPosts } from "@/data/community";
 import ReactMarkdown from "react-markdown";
 
-interface PageProps {
+export default function CommunityDetailPage({
+  params,
+}: {
   params: { id: string };
-}
-
-export default async function CommunityDetailPage({ params }: PageProps) {
+}) {
   const post = communityPosts.find((p) => String(p.id) === params.id);
   if (!post) return notFound();
 
@@ -23,8 +24,9 @@ export default async function CommunityDetailPage({ params }: PageProps) {
   );
 }
 
-export async function generateStaticParams() {
+// 반드시 params 래퍼를 포함해서 리턴해야 함
+export async function generateStaticParams(): Promise<Array<{ params: { id: string } }>> {
   return communityPosts.map((post) => ({
-    id: post.id.toString(),
+    params: { id: post.id.toString() },
   }));
 }
