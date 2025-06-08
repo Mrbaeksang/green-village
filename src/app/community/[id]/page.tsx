@@ -1,12 +1,16 @@
+// src/app/community/[id]/page.tsx
+
 import { notFound } from "next/navigation";
 import { communityPosts } from "@/data/community";
 import ReactMarkdown from "react-markdown";
 
-export default async function CommunityDetailPage({
-  params,
-}: {
-  params: { id: string };
-}) {
+type CommunityDetailPageProps = {
+  params: {
+    id: string;
+  };
+};
+
+export default async function CommunityDetailPage({ params }: CommunityDetailPageProps) {
   const post = communityPosts.find((p) => String(p.id) === params.id);
   if (!post) return notFound();
 
@@ -22,8 +26,8 @@ export default async function CommunityDetailPage({
   );
 }
 
-export async function generateStaticParams() {
+export async function generateStaticParams(): Promise<Array<{ id: string }>> {
   return communityPosts.map((post) => ({
-    params: { id: post.id.toString() },
+    id: post.id.toString(),
   }));
 }
