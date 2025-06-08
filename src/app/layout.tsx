@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import KakaoChatButton from "@/components/KakaoChatButton"; // ✅ 추가
+import FloatingButtons from '@/components/FloatingButtons';
 
 const inter = Inter({
   subsets: ["latin"],
@@ -29,10 +29,12 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ko" className="scroll-smooth">
-      <body className={`${inter.variable} font-sans antialiased`}>
-        <div className="min-h-screen flex flex-col">{children}</div>
-        <KakaoChatButton /> {/* 항상 오른쪽 하단에 노출 */}
+    <html lang="ko">
+      <body>
+        <div className="min-h-screen flex flex-col">
+          {children}
+        </div>
+        <FloatingButtons /> {/* 오른쪽 하단 고정 버튼 */}
       </body>
     </html>
   );

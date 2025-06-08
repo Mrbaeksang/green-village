@@ -1,14 +1,11 @@
+// components/Header.tsx
 'use client';
 
 import Link from 'next/link';
 import { useState } from 'react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 
-type NavItem = {
-  name: string;
-  href: string;
-};
-
+type NavItem = { name: string; href: string; };
 const navigation: NavItem[] = [
   { name: '홈', href: '/' },
   { name: '제품소개', href: '/products' },
@@ -17,68 +14,53 @@ const navigation: NavItem[] = [
 ];
 
 export default function Header() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-gray-200 shadow-sm">
-      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-        {/* Logo */}
-        <Link href="/" className="text-2xl font-extrabold text-green-600 tracking-tight">
-          녹색마을
-        </Link>
-
-        {/* Desktop Menu */}
-        <div className="hidden lg:flex items-center gap-10">
+    <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200">
+      <div className="max-w-7xl mx-auto flex items-center justify-between p-4 lg:p-6">
+        <Link href="/" className="text-2xl font-extrabold text-green-600">녹색마을</Link>
+        <button onClick={() => setOpen(true)} className="lg:hidden p-2 rounded-md hover:bg-gray-100">
+          <Bars3Icon className="h-6 w-6 text-gray-700" />
+        </button>
+        <nav className="hidden lg:flex gap-8">
           {navigation.map((item) => (
             <Link
               key={item.name}
               href={item.href}
-              className={`text-sm font-medium transition-all ${
+              className={`text-sm font-medium transition ${
                 item.name === '문의하기'
-                  ? 'bg-green-600 text-white px-5 py-2 rounded-full shadow-md hover:bg-green-700'
+                  ? 'bg-green-600 text-white px-4 py-2 rounded-full hover:bg-green-700'
                   : 'text-gray-700 hover:text-green-600'
               }`}
             >
               {item.name}
             </Link>
           ))}
-        </div>
+        </nav>
+      </div>
 
-        {/* Mobile Hamburger */}
-        <div className="lg:hidden">
-          <button
-            onClick={() => setMobileMenuOpen(true)}
-            className="p-2 rounded-md text-gray-700 hover:bg-gray-100 focus:outline-none"
-          >
-            <Bars3Icon className="h-6 w-6" />
-          </button>
-        </div>
-      </nav>
-
-      {/* Mobile Menu */}
-      {mobileMenuOpen && (
-        <div className="lg:hidden fixed inset-0 z-50 bg-white p-6 shadow-xl animate-fadeIn">
-          <div className="flex items-center justify-between mb-8">
-            <Link href="/" className="text-2xl font-bold text-green-600">
-              녹색마을
-            </Link>
-            <button
-              onClick={() => setMobileMenuOpen(false)}
-              className="p-2 rounded-md text-gray-700 hover:bg-gray-100"
-            >
-              <XMarkIcon className="h-6 w-6" />
+      {open && (
+        <div
+          className="fixed inset-0 z-50 bg-white p-6 flex flex-col"
+          onClick={() => setOpen(false)}
+        >
+          <div className="flex items-center justify-between">
+            <Link href="/" className="text-2xl font-bold text-green-600">녹색마을</Link>
+            <button onClick={() => setOpen(false)} className="p-2 rounded-md hover:bg-gray-100">
+              <XMarkIcon className="h-6 w-6 text-gray-700" />
             </button>
           </div>
-          <div className="space-y-4">
+          <div className="mt-8 space-y-6">
             {navigation.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
-                onClick={() => setMobileMenuOpen(false)}
-                className={`block w-full text-center px-4 py-3 rounded-lg text-base font-medium transition ${
+                onClick={() => setOpen(false)}
+                className={`block text-lg font-semibold p-3 rounded-md ${
                   item.name === '문의하기'
-                    ? 'bg-green-600 text-white hover:bg-green-700'
-                    : 'text-gray-800 hover:bg-gray-100'
+                    ? 'bg-green-600 text-white text-center hover:bg-green-700'
+                    : 'text-gray-900 hover:bg-gray-100'
                 }`}
               >
                 {item.name}
