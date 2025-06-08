@@ -3,14 +3,12 @@ import { notFound } from 'next/navigation';
 import { products } from '@/types/product';
 import ProductDetail from '@/components/ProductDetail';
 
-interface Params {
+interface RouteParams {
   id: string;
 }
 
 interface PageProps {
-  params: {
-    id: string;
-  };
+  params: RouteParams;
 }
 
 export default function ProductDetailPage({ params }: PageProps) {
@@ -21,4 +19,11 @@ export default function ProductDetailPage({ params }: PageProps) {
   }
 
   return <ProductDetail product={product} />;
+}
+
+// SSG 지원 (정적 경로 생성)
+export async function generateStaticParams(): Promise<{ params: RouteParams }[]> {
+  return products.map((product) => ({
+    params: { id: product.id.toString() },
+  }));
 }
