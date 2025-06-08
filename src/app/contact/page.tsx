@@ -1,8 +1,33 @@
 'use client';
 
-import Image from 'next/image';
+import { useState } from 'react';
 
 export default function ContactPage() {
+  const [isSent, setIsSent] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    setLoading(true);
+
+    try {
+      await fetch('https://formsubmit.co/jsu3001@naver.com', {
+        method: 'POST',
+        headers: { Accept: 'application/json' },
+        body: formData,
+      });
+
+      setIsSent(true);
+      form.reset();
+    } catch (error) {
+      alert('문의 전송에 실패했습니다. 다시 시도해 주세요.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
@@ -34,13 +59,13 @@ export default function ContactPage() {
             </ul>
           </div>
 
-          {/* 문의폼 */}
+          {/* 문의 폼 */}
           <form
-            action="https://formsubmit.co/jsu3001@naver.com"
-            method="POST"
+            onSubmit={handleSubmit}
             className="bg-white rounded-xl p-8 shadow-sm space-y-6 border border-gray-200"
           >
             <input type="hidden" name="_captcha" value="false" />
+
             <div>
               <label htmlFor="name" className="block text-sm font-medium text-gray-700">
                 이름
@@ -94,13 +119,30 @@ export default function ContactPage() {
 
             <button
               type="submit"
-              className="w-full bg-green-600 text-white py-3 rounded-md font-semibold hover:bg-green-700 transition-colors"
+              disabled={loading}
+              className="w-full bg-green-600 text-white py-3 rounded-md font-semibold hover:bg-green-700 transition-colors disabled:opacity-50"
             >
-              문의하기
+              {loading ? '전송 중...' : '문의하기'}
             </button>
           </form>
         </div>
       </div>
+
+      {/* 전송 완료 모달 */}
+      {isSent && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-xl p-8 max-w-md w-full text-center shadow-lg">
+            <h2 className="text-2xl font-bold text-green-700 mb-4">문의가 접수되었습니다!</h2>
+            <p className="text-gray-600 mb-6">빠른 시일 내에 연락드리겠습니다. 감사합니다 😊</p>
+            <button
+              onClick={() => setIsSent(false)}
+              className="bg-green-600 text-white px-6 py-2 rounded-md hover:bg-green-700 transition"
+            >
+              확인
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
